@@ -1,0 +1,148 @@
+{
+  "run_id": "sim-005245d384d0",
+  "profile_name": "resilience-shared",
+  "profile_fingerprint": "sha256:804996fea9bd22f2ccc00ba49f64a537e7888a8594c4f6a2870c0076f52e5f4c",
+  "created_at": 0.0,
+  "participants": [
+    {
+      "name": "experiment",
+      "role": "resilience_clock"
+    },
+    {
+      "name": "backend-0",
+      "role": "resilience_backend"
+    },
+    {
+      "name": "backend-1",
+      "role": "resilience_backend"
+    },
+    {
+      "name": "backend-2",
+      "role": "resilience_backend"
+    },
+    {
+      "name": "backend-3",
+      "role": "resilience_backend"
+    },
+    {
+      "name": "provider-00",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-01",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-02",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-03",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-04",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-05",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-06",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-07",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-08",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-09",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-10",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "provider-11",
+      "role": "resilience_provider"
+    },
+    {
+      "name": "buyer-00",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-01",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-02",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-03",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-04",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-05",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-06",
+      "role": "resilience_buyer"
+    },
+    {
+      "name": "buyer-07",
+      "role": "resilience_buyer"
+    }
+  ],
+  "releases": {
+    "nandatown": "0.2.0",
+    "nandatown_commit": "b7adc6121868742cf0f00cfebbf2d38bdb349057",
+    "nanda_resilience": "0.1.0",
+    "evaluator": "lab-0.2.6",
+    "resilience_evaluator": "resilience.v2",
+    "python": "3.12.10"
+  },
+  "config": {
+    "mode": "lab",
+    "seed": 0,
+    "layers": {
+      "transport": "memory.v1",
+      "communication": "envelope.v1",
+      "identity": "keys.v1",
+      "registry": "index.owned.v1",
+      "auth": "hmac.v1",
+      "trust": "reputation.v1",
+      "payments": "ledger.v1",
+      "coordination": "resilience.load.v1",
+      "negotiation": "haggle.v1",
+      "memory": "kv.v1",
+      "privacy": "redact.v1",
+      "data_facts": "evidence.v1"
+    },
+    "logical_time": 44.0,
+    "rerun_command": "nanda-resilience run --condition shared --policy load --seed 0 --disclosure 1.0 --out NEW_DIRECTORY",
+    "settings": {
+      "seed": 0,
+      "policy": "load",
+      "condition": "shared",
+      "disclosure": 1.0,
+      "buyers": 8,
+      "rounds": 20,
+      "attempts": 3,
+      "interval": 2.0,
+      "service_time": 0.35,
+      "dependency_capacity": 12
+    }
+  }
+}

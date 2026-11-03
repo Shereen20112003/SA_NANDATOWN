@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nanda-resilience"
+version = "0.1.0"
+description = "Many Agents, One Point of Failure: a reproducible Nanda Town Lab experiment"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "nandatown @ git+https://github.com/projnanda/nandatown.git@b7adc6121868742cf0f00cfebbf2d38bdb349057",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+nanda-resilience = "nanda_resilience.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

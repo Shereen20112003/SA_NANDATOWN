@@ -1,0 +1,397 @@
+{
+  "name": "resilience-shared",
+  "description": "Shared dependencies, bounded retries, and partial disclosure.",
+  "seed": 0,
+  "layers": {
+    "transport": "memory.v1",
+    "communication": "envelope.v1",
+    "identity": "keys.v1",
+    "registry": "index.owned.v1",
+    "auth": "hmac.v1",
+    "trust": "reputation.v1",
+    "payments": "ledger.v1",
+    "coordination": "resilience.load.v1",
+    "negotiation": "haggle.v1",
+    "memory": "kv.v1",
+    "privacy": "redact.v1",
+    "data_facts": "evidence.v1"
+  },
+  "agents": [
+    {
+      "name": "experiment",
+      "role": "resilience_clock",
+      "config": {
+        "world": {
+          "settings": {
+            "seed": 0,
+            "policy": "load",
+            "condition": "shared",
+            "disclosure": 1.0,
+            "buyers": 8,
+            "rounds": 20,
+            "attempts": 3,
+            "interval": 2.0,
+            "service_time": 0.35,
+            "dependency_capacity": 12
+          },
+          "providers": [
+            {
+              "name": "provider-00",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-01",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-02",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-03",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-04",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-05",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-06",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-07",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-08",
+              "dependency": "backend-0",
+              "disclosed": true,
+              "price_cents": 10,
+              "outages": []
+            },
+            {
+              "name": "provider-09",
+              "dependency": "backend-1",
+              "disclosed": true,
+              "price_cents": 12,
+              "outages": []
+            },
+            {
+              "name": "provider-10",
+              "dependency": "backend-2",
+              "disclosed": true,
+              "price_cents": 14,
+              "outages": []
+            },
+            {
+              "name": "provider-11",
+              "dependency": "backend-3",
+              "disclosed": true,
+              "price_cents": 16,
+              "outages": []
+            }
+          ],
+          "dependency_outages": {
+            "backend-0": [
+              [
+                12.0,
+                28.0
+              ]
+            ],
+            "backend-1": [],
+            "backend-2": [],
+            "backend-3": []
+          }
+        }
+      }
+    },
+    {
+      "name": "backend-0",
+      "role": "resilience_backend",
+      "config": {
+        "outages": [
+          [
+            12.0,
+            28.0
+          ]
+        ],
+        "capacity": 12,
+        "service_time": 0.35
+      }
+    },
+    {
+      "name": "backend-1",
+      "role": "resilience_backend",
+      "config": {
+        "outages": [],
+        "capacity": 12,
+        "service_time": 0.35
+      }
+    },
+    {
+      "name": "backend-2",
+      "role": "resilience_backend",
+      "config": {
+        "outages": [],
+        "capacity": 12,
+        "service_time": 0.35
+      }
+    },
+    {
+      "name": "backend-3",
+      "role": "resilience_backend",
+      "config": {
+        "outages": [],
+        "capacity": 12,
+        "service_time": 0.35
+      }
+    },
+    {
+      "name": "provider-00",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-00",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-01",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-01",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-02",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-02",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-03",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-03",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-04",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-04",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-05",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-05",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-06",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-06",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-07",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-07",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-08",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-08",
+        "dependency": "backend-0",
+        "disclosed": true,
+        "price_cents": 10,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-09",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-09",
+        "dependency": "backend-1",
+        "disclosed": true,
+        "price_cents": 12,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-10",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-10",
+        "dependency": "backend-2",
+        "disclosed": true,
+        "price_cents": 14,
+        "outages": []
+      }
+    },
+    {
+      "name": "provider-11",
+      "role": "resilience_provider",
+      "config": {
+        "name": "provider-11",
+        "dependency": "backend-3",
+        "disclosed": true,
+        "price_cents": 16,
+        "outages": []
+      }
+    },
+    {
+      "name": "buyer-00",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-01",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-02",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-03",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-04",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-05",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-06",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    },
+    {
+      "name": "buyer-07",
+      "role": "resilience_buyer",
+      "config": {
+        "rounds": 20,
+        "interval": 2.0,
+        "attempts": 3,
+        "balance_cents": 400
+      }
+    }
+  ],
+  "faults": [],
+  "redact_fields": [],
+  "max_time": 44.0,
+  "validator": "resilience.v2",
+  "plugin_files": [],
+  "adaptations": []
+}

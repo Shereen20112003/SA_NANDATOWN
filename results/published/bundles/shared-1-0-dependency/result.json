@@ -1,0 +1,37 @@
+{
+  "run_id": "sim-667086afcbce",
+  "evaluator_version": "lab-0.2.6",
+  "stages": [
+    {
+      "name": "resilience.v2",
+      "status": "passed",
+      "evidence": [
+        "ev-2855"
+      ],
+      "note": "Replayed 160 tasks, 176 attempts; 160 tasks succeeded. Pass means evidence is internally consistent, not that this policy is resilient or dependencies are truthful."
+    },
+    {
+      "name": "ledger_conserved",
+      "status": "passed",
+      "evidence": [
+        "ev-199",
+        "ev-203",
+        "ev-207",
+        "ev-211",
+        "ev-215",
+        "ev-219",
+        "ev-223",
+        "ev-227"
+      ],
+      "note": "3200 cents conserved across every movement"
+    },
+    {
+      "name": "privacy",
+      "status": "not_tested",
+      "evidence": [],
+      "note": "no redaction declared by this scenario"
+    }
+  ],
+  "verdict": "passed",
+  "evaluated_at": 1793698032.8123205
+}

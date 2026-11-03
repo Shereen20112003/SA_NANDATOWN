@@ -1,0 +1,124 @@
+{
+  "policy": "load",
+  "condition": "shared",
+  "disclosure": 1.0,
+  "actual_disclosure": 1.0,
+  "seed": 0,
+  "tasks": 160,
+  "completed": 104,
+  "completion_rate": 0.65,
+  "stress_completion_rate": 0.125,
+  "attempts_per_task": 1.8,
+  "repeated_dependency_retries": 128,
+  "cost_per_success_cents": 10,
+  "total_spend_cents": 1040,
+  "p95_success_latency": 1.7500000000000213,
+  "recovery_after_outage": 1.0,
+  "agent_hhi_before_stress": 0.1154513888888889,
+  "dependency_hhi_before_stress": 1.0,
+  "timeline": [
+    {
+      "at": 1.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 3.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 5.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 7.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 9.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 11.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 13.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 15.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 17.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 19.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 21.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 23.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 25.0,
+      "completion": 0.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 27.0,
+      "completion": 1.0,
+      "attempts_per_task": 3
+    },
+    {
+      "at": 29.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 31.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 33.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 35.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 37.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    },
+    {
+      "at": 39.0,
+      "completion": 1.0,
+      "attempts_per_task": 1
+    }
+  ],
+  "logical_trace_fingerprint": "sha256:1623240d665f97d4b0a2654650956ceb0b1416365f03680167242e82eed775ce",
+  "evaluator": "resilience.v2",
+  "bundle": "shared-1-0-load"
+}
