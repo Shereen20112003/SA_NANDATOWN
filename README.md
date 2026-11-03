@@ -86,7 +86,7 @@ Python 3.11 or 3.12 and Git are required. No model credentials or API spending.
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.lock
-.\.venv\Scripts\python.exe -m pip install --no-deps -e .
+.\.venv\Scripts\python.exe -m pip install -e .
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
@@ -95,10 +95,14 @@ If Python is managed with `uv` instead:
 ```powershell
 uv venv --python 3.12
 uv pip install -r requirements.lock
-uv pip install --no-deps -e .
+uv pip install -e .
 ```
 
-The portable requirements file pins transitive and development dependencies.
+The portable requirements file pins and hashes registry-hosted transitive and
+development dependencies. The second installation command installs the project
+and its immutable Git-pinned Nanda Town dependency from the project manifest.
+Do not add `--no-deps` to that command on a clean environment: pip cannot put a
+Git dependency in the same hash-checked requirements file.
 Use your organization's configured package index if direct PyPI access is
 unavailable; do not disable TLS verification. The local `uv.lock` is ignored
 because it can embed environment-specific package-index URLs.
@@ -109,7 +113,7 @@ because it can embed environment-specific package-index URLs.
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.lock
-python -m pip install --no-deps -e .
+python -m pip install -e .
 python -m pytest -q
 ```
 

@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -r requirements.lock
-      - run: python -m pip install --no-deps -e .
+      - run: python -m pip install -e .
       - run: python -m pytest -q
       - run: nanda-resilience campaign --out smoke-results --seeds 0 --disclosures 0 1
       - uses: actions/upload-artifact@v4
