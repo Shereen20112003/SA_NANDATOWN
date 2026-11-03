@@ -1,5 +1,12 @@
 # Sharing the contribution
 
+## Live workbench walkthrough
+
+Start with [the annotated screenshots](docs/DEMO.md). They show actual completed
+model-backed research and evaluation runs and explain the limits of the outputs.
+No coco access, model account, or local server is required to view that page.
+The benchmark below remains a separate, credential-free reproducible experiment.
+
 ## Project repository
 
 [Shereen20112003/SA_NANDATOWN](https://github.com/Shereen20112003/SA_NANDATOWN)

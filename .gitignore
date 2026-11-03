@@ -10,3 +10,7 @@ uv.lock
 results/*
 !results/published/
 !results/published/**
+.env
+.env.*
+!.env.example
+.workbench/

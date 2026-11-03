@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nanda Workbench</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Nanda Workbench home"><span class="brand-mark">n.</span><span>Nanda<span class="brand-sub">WORKBENCH</span></span></a>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav aria-label="Workspace">
+      <button class="nav-button active" data-view="research"><span class="nav-icon">R</span>Research</button>
+      <button class="nav-button" data-view="evaluation"><span class="nav-icon">E</span>Evaluations</button>
+      <button class="nav-button" data-view="history"><span class="nav-icon">H</span>Run history</button>
+    </nav>
+    <div class="nav-caption infrastructure">INFRASTRUCTURE</div>
+    <nav aria-label="Infrastructure">
+      <button class="nav-button" data-view="resources"><span class="nav-icon">A</span>Agents &amp; resources</button>
+      <button class="nav-button" data-view="settings"><span class="nav-icon">S</span>Connection settings</button>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span>Local workspace<div>Model providers / Nanda Town</div></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumb">Research</strong></div><button id="connection" class="connection">Checking configuration</button></header>
+    <div id="notice" role="alert" hidden></div>
+    <section class="page-heading"><div><div class="eyebrow" id="eyebrow">EVIDENCE, NOT GUESSWORK</div><h1 id="page-title">Research</h1><p id="page-description">Give agents a question and public sources. Get a brief you can inspect and use.</p></div><button id="new-run" class="button secondary">+ New run</button></section>
+    <section id="workspace-view" class="workspace-grid">
+      <div class="compose-panel">
+        <form id="run-form">
+          <div class="panel-heading"><h2>Task</h2><button type="button" class="text-button" id="example">Load an example</button></div>
+          <label for="question">What do you want to investigate?</label>
+          <textarea id="question" rows="5" minlength="12" maxlength="4000" required placeholder="Ask a specific question. Describe the decision you need to make."></textarea>
+          <div id="research-fields">
+            <label for="sources">Public source URLs <span>one per line</span></label>
+            <textarea id="sources" rows="4" placeholder="https://..."></textarea>
+            <p class="field-help">Up to four public HTML/text sources. Official documentation, GitHub, arXiv abstracts, and Wikipedia are supported. No private pages or PDFs.</p>
+          </div>
+          <div id="evaluation-fields" hidden>
+            <label for="reference">Reference material <span>optional, public material only</span></label>
+            <textarea id="reference" rows="4" maxlength="12000" placeholder="Provide the facts the target agent should use."></textarea>
+            <label for="rubric">Evaluation criteria</label>
+            <textarea id="rubric" rows="4" maxlength="4000" placeholder="Define correct behavior and specific mistakes to look for."></textarea>
+            <label for="cases">Challenging test cases</label>
+            <select id="cases"><option value="1">1 case</option><option value="2" selected>2 cases</option><option value="3">3 cases</option></select>
+          </div>
+          <div class="form-divider"></div>
+          <label for="policy">Agent selection</label>
+          <select id="policy">
+            <option value="dependency">Dependency-aware</option>
+            <option value="price">Prefer primary resource</option>
+            <option value="load">Balance agent load</option>
+            <option value="random">Randomized control</option>
+          </select>
+          <p class="field-help">Selection uses Nanda Town's registry and coordination rules. Routing priority is not a model-price estimate.</p>
+          <label class="consent"><input id="consent" type="checkbox" required><span>Allow real model calls for this task. I have permission to send this material. Cloud charges or Copilot quota usage may apply.</span></label>
+          <button class="button primary run-button" id="run-button" type="submit">Run agents <span aria-hidden="true">&rarr;</span></button>
+          <p class="run-budget">Maximum 12 model steps per run; provider retries may add requests. No mock answers.</p>
+        </form>
+      </div>
+      <div class="output-panel">
+        <div class="output-header"><div><span class="small-label">CURRENT RUN</span><strong id="run-label">No active run</strong></div><div class="output-actions"><button class="button danger small" id="cancel-run" hidden>Stop run</button><button class="button secondary small" id="export-run" hidden>Export evidence</button></div></div>
+        <div class="tabs" role="tablist" aria-label="Run output">
+          <button class="tab active" role="tab" data-tab="result" aria-selected="true">Result</button>
+          <button class="tab" role="tab" data-tab="live" aria-selected="false">Live output <span id="live-dot" hidden></span></button>
+          <button class="tab" role="tab" data-tab="evidence" aria-selected="false">Sources &amp; evidence</button>
+        </div>
+        <div id="result-panel" class="output-body"><div class="empty-state"><div class="document-icon" aria-hidden="true"><i></i><i></i><i></i></div><h2>Your work starts here</h2><p>Submit a task to see agents retrieve evidence, write, and review. Nothing on this screen is a precomputed answer.</p><div class="workflow-line">Read sources <span>&rarr;</span> Draft <span>&rarr;</span> Review</div></div></div>
+        <div id="live-panel" class="output-body" hidden><div class="inline-note">Model text appears here as the provider streams it. Structured JSON is the agent-to-agent output format.</div><div id="live-output"></div></div>
+        <div id="evidence-panel" class="output-body" hidden><p class="muted">Retrieved sources, model usage, and protocol evidence appear after a run starts.</p></div>
+      </div>
+      <aside class="activity-panel">
+        <div class="panel-heading"><h2>Activity</h2><span id="run-state" class="state-label">Idle</span></div>
+        <div id="agent-list" class="agent-list"><p class="muted">Agent activity will appear when a task runs.</p></div>
+        <div class="activity-divider"></div><div class="small-label">EVENT LOG</div>
+        <ol id="event-log" class="event-log"><li class="muted">Waiting for a task.</li></ol>
+        <div class="activity-footer"><button class="text-button" data-view="resources">Open resource controls &rarr;</button><p>Fault controls pause new calls locally. They do not disable your provider service.</p></div>
+      </aside>
+    </section>
+    <section id="secondary-view" hidden></section>
+  </main>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>

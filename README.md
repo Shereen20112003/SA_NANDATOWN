@@ -2,6 +2,15 @@
 
 **A reproducible Nanda Town Lab experiment on shared dependencies in agent discovery.**
 
+This repository also includes **Nanda Workbench**, a light-themed local application
+for source-based research and model-generated behavioral evaluations using real
+Azure OpenAI or coco/Copilot calls. The deterministic experiment and live application are
+separate modes; the original report is not a live-agent demonstration.
+
+**[View the real-agent demo walkthrough](docs/DEMO.md)**: annotated screenshots
+of completed research and evaluation runs, with no model account or installation
+needed to view them.
+
 Project repository: [Shereen20112003/SA_NANDATOWN](https://github.com/Shereen20112003/SA_NANDATOWN).
 
 [Clean-install CI verification](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41619744094):
@@ -31,7 +40,175 @@ evidence supporting them.
 
 This is newly implemented synthetic work. It does not incorporate employer code,
 private datasets, internal evaluation results, or unpublished project artifacts.
-It is not an automatic hidden-test generator; that would be a separate extension.
+The benchmark is not an automatic hidden-test generator. The separate workbench
+can ask a model to generate challenging cases, run a target model, and judge its
+responses, but that does not establish that the generated cases are novel,
+exhaustive, or correctly labeled.
+
+## Live-agent application
+
+**Verification status:** on November 3, 2026, two real coco-backed workflows
+completed through the local browser UI using Claude Haiku 4.5: a one-source
+research brief (3 model steps, 7,247 reported tokens) and a one-case evaluation
+(4 steps, 4,403 tokens). Both took about 133 seconds on the verification machine.
+Source quotations, judgment quotation, and signed-message send/delivery counts
+were checked against the saved evidence. Draft isolation, reload persistence,
+history, JSON export, and a paused-backend failure with zero model calls were
+also verified. Earlier failed integration attempts remain in local history.
+A successful real Azure run has not yet been verified.
+The linked hosted CI results above apply to the previously published benchmark,
+not the later workbench addition. Current checks are listed in the
+[Actions tab](https://github.com/Shereen20112003/SA_NANDATOWN/actions).
+
+After installing the project as described below, create a **local, ignored**
+`.env` file using `.env.example`. Never commit credentials or paste them into an
+issue, chat, exported run, or browser form.
+
+```dotenv
+AZURE_OPENAI_ENDPOINT=https://YOUR-RESOURCE.openai.azure.com/
+AZURE_OPENAI_API_KEY=YOUR-LOCAL-KEY
+AZURE_OPENAI_DEPLOYMENT=YOUR-DEPLOYMENT-NAME
+```
+
+In Azure Portal, select an authorized Azure OpenAI resource and open **Keys and
+Endpoint**. In Foundry's deployment management, copy the actual deployment name,
+not just the underlying model name. Use a deployment supporting the Azure v1
+chat-completions API, JSON mode, streaming, and `max_completion_tokens`, such as
+a suitable GPT-4.1 deployment. A Foundry project URL is not the resource endpoint.
+API-key authentication is currently supported; managed identity is not.
+
+```powershell
+.\.venv\Scripts\nanda-workbench.exe --port 8766
+```
+
+Open **http://127.0.0.1:8766/**. On macOS/Linux, run `nanda-workbench --port 8766`
+from the activated environment. Configuration is reread from `.env` when you
+recheck settings or start a run; a restart is not necessary.
+
+### Using an existing coco installation
+
+coco is optional and separately distributed; it is not bundled with this public
+project. Use it only where your organization's access and usage rules permit.
+Install and authenticate it using your authorized distribution's instructions,
+then verify `coco status`, `coco doctor`, and `coco models`. Claude Code must support
+`--bare`, tool disabling, single-turn limits, and streaming JSON output.
+The tested local versions are coco 0.2.8 and Claude Code 2.1.317.
+
+Set these in a local, ignored environment file (for example `.env.coco`):
+
+```dotenv
+WORKBENCH_PROVIDER=coco
+COCO_MODEL=claude-haiku-4-5
+COCO_EXECUTABLE=
+```
+
+Use an exact model ID from `coco models`. Leave `COCO_EXECUTABLE` empty if coco
+is on PATH or in its standard Windows installation location; otherwise set its
+full executable path.
+
+```powershell
+.\.venv\Scripts\nanda-workbench.exe --env-file .env.coco --port 8766
+```
+
+The workbench invokes `coco run` per model step, with prompts over stdin,
+tools and MCP servers disabled, `--bare`, one turn, and session persistence
+disabled. It runs outside the repository in a dedicated state subdirectory,
+streams text into the same activity UI, validates final JSON, and records
+reported token usage. It does not read coco token files, install coco, enable
+IDE routing, or change global Claude settings. Existing coco daemons are reused.
+Model JSON may be raw or enclosed in exactly one Markdown JSON fence; surrounding
+prose and wrong schemas remain errors. The unmodified text stays in live evidence.
+Text is displayed when the CLI provides it; some models buffer an entire response
+rather than emitting fine-grained text deltas.
+
+This is **cloud inference through Copilot**, not a local model and not guaranteed
+free usage. Account entitlements, quota, and organizational policies apply.
+All coco roles share the dependency `copilot-via-coco`: different model names do
+not demonstrate independent resources. Pausing that dependency makes subsequent
+steps fail explicitly; there is no automatic Azure fallback. Select
+`WORKBENCH_PROVIDER=azure` to return to the existing Azure configuration.
+
+### Workflows
+
+- **Research:** provide a question and up to four supported public URLs. Reader
+  agents extract evidence, a writer produces a cited brief, and a reviewer checks
+  it. Exact quotations must occur in the retrieved text, and inline source IDs
+  must match the declared sources. These checks do **not** prove that a claim
+  follows from its citation. Save edits separately from the original output.
+- **Evaluations:** provide a task, reference policy, and rubric. A target produces
+  a baseline answer; a challenger generates one to three test cases; the target
+  answers each; a judge labels each response with quoted evidence. The target
+  is the configured provider model, not an arbitrary external production agent.
+  Judges can be wrong and share model biases; labels are not ground truth.
+- **Activity and history:** streamed output is separated by step and attempt.
+  Completed, failed, and cancelled runs retain local evidence. Export JSON to
+  inspect model responses and Nanda Town events; download edited brief text.
+- **Resources:** inspect shared Azure hosts and pause new calls locally. Configure
+  `AZURE_OPENAI_BACKUP_ENDPOINT`, `AZURE_OPENAI_BACKUP_API_KEY`, and
+  `AZURE_OPENAI_BACKUP_DEPLOYMENT` for a second resource. Two deployments on the
+  **same host** are one dependency, not independent failover. Even distinct Azure
+  resources still share a cloud provider.
+
+Without retries, research uses one model call per unique source plus two;
+evaluation uses two plus two per test case. Each run has a hard limit of **12
+model-step invocations**, an output limit of 2,200 tokens requested from the
+provider/CLI, and a 90-second Azure or 120-second coco deadline per invocation.
+CLI/provider-internal retries can add underlying requests; the step limit is
+not a guarantee about billing. At most two runs can be active. A consent checkbox is required.
+Reported token counts cover completed responses, not all potentially billable
+failed or cancelled calls; they are not a price estimate.
+
+### How the live application uses Nanda Town
+
+Six role-specific local agents per deployment (reader, writer, reviewer,
+challenger, target, judge) register with the upstream owned registry. The
+orchestrator discovers candidates through `TownAPI.lookup`, selects one using
+the benchmark's shared policy function, sends a signed work envelope through
+Nanda Town, awaits Azure HTTPS or coco CLI, and sends a signed result back. These are fixed,
+inspectable workflows, not independently deployed autonomous agents.
+
+`workbench.local.v1` delivers local envelopes synchronously through upstream
+authorization; `workbench.selection.v1` tracks reservations and retries.
+Selection state is shared within a run, not between different runs. The
+workbench's primary/backup routing priorities are **not monetary prices**.
+Live JSON exports are application journals, not the benchmark's signed,
+replay-verifiable Lab evidence bundles.
+
+To explore a shared failure, start a task, open **Agents & resources**, pause the
+primary host, then inspect subsequent attempts. Calls already submitted continue.
+This injects a local gateway failure; it does not disable the provider. With only one
+host, recovery is impossible and the task fails explicitly. Repeating live tasks
+with different selection policies is not a controlled statistical comparison:
+model responses, timing, and provider conditions vary. Use the paired-seed
+benchmark below for quantitative policy claims.
+
+### Privacy, scope, and tests
+
+The server binds only to localhost. It has no user accounts and is **not** an
+authenticated public hosting solution; do not expose it through a public tunnel.
+Use only provider accounts and material you have permission to use.
+
+Prompts and public source text go to the configured cloud provider.
+History, events, and drafts are stored in `.workbench/runs.sqlite3`.
+If the checkout is inside a cloud-synced folder, that database may also sync.
+Use `--state-dir` pointing outside such folders when appropriate. Exports contain
+prompts and outputs; review them before sharing. API keys are not recorded in
+status responses or model evidence.
+
+Supported source hosts are listed by `/api/status` and enforced on every redirect.
+Only public HTTPS HTML/text is supported, not PDFs, private pages, arbitrary web
+search, or browser automation. Downloads are limited to 1 MB, and extracted text
+to 10,000 characters per source. A source may reject retrieval or require
+JavaScript; the application reports the failure instead of inventing content.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q tests\test_workbench.py tests\test_coco.py
+```
+
+Tests use explicitly labeled HTTP/subprocess fixtures for reproducibility and
+never spend Azure credits or Copilot quota. The application itself has no
+mock-response mode. Passing these tests does not verify provider credentials,
+deployment support, or live quality.
 
 ## Start with the evidence
 
@@ -83,7 +260,9 @@ No upstream source changes are required.
 
 ## Install
 
-Python 3.11 or 3.12 and Git are required. No model credentials or API spending.
+Python 3.11 or 3.12 and Git are required. The benchmark and automated tests need
+no model credentials or API spending. The live workbench requires Azure access
+or an authorized coco installation and may incur cloud charges or consume Copilot quota.
 
 ### Windows PowerShell
 
