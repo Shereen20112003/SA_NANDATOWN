@@ -13,9 +13,13 @@ needed to view them.
 
 Project repository: [Shereen20112003/SA_NANDATOWN](https://github.com/Shereen20112003/SA_NANDATOWN).
 
-[Clean-install CI verification](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41619744094):
-104 tests and 30 smoke experiments passed on each Windows/Linux and Python
-3.11/3.12 combination.
+Upstream contribution: [Nanda Town PR #318](https://github.com/projnanda/nandatown/pull/318)
+proposes the full deterministic experiment package. It is submitted for review,
+not merged; the live workbench remains in this repository.
+
+[Clean-install CI verification](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41708428755):
+190 tests, 30 smoke experiments, and a wheel build passed on each Windows/Linux
+and Python 3.11/3.12 combination.
 
 Twelve service agents can look like twelve alternatives while nine depend on the
 same backend. This project asks whether dependency-aware selection improves
@@ -56,8 +60,9 @@ were checked against the saved evidence. Draft isolation, reload persistence,
 history, JSON export, and a paused-backend failure with zero model calls were
 also verified. Earlier failed integration attempts remain in local history.
 A successful real Azure run has not yet been verified.
-The linked hosted CI results above apply to the previously published benchmark,
-not the later workbench addition. Current checks are listed in the
+The linked hosted CI results above cover both the benchmark and workbench.
+CI uses mocked model providers; the real-call verification is separate.
+Current checks are listed in the
 [Actions tab](https://github.com/Shereen20112003/SA_NANDATOWN/actions).
 
 After installing the project as described below, create a **local, ignored**

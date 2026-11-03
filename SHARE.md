@@ -16,63 +16,29 @@ Suggested description:
 > Many Agents, One Point of Failure: reproducible Nanda Town Lab experiments on
 > dependency-aware discovery, correlated outages, and incomplete information.
 
-This is the independent project repository, not an upstream Nanda Town PR.
+This is the independent project repository. The upstream contribution is
+[Nanda Town PR #318](https://github.com/projnanda/nandatown/pull/318), submitted
+for review, not merged.
 The Python package and CLI are named `nanda-resilience`.
 
-## Publish from PowerShell
+## Verification and scope
 
-For a fresh local copy with no remote, the publication commands are below.
-For an already connected checkout, commit your changes and run `git push` instead.
+[Hosted clean-install CI](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41708428755)
+passed on Windows and Linux with Python 3.11 and 3.12: 190 tests, 30 deterministic
+smoke experiments, and a wheel build per configuration.
 
-```powershell
-git add .
-git diff --cached --stat
-git commit -m "Add dependency-aware Nanda Town resilience experiment" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-git remote add origin https://github.com/Shereen20112003/SA_NANDATOWN.git
-git push -u origin main
-```
+The workbench's real coco-backed research and evaluation runs were verified
+separately; CI uses mocked model providers. The walkthrough shows saved real-run
+screenshots, not a publicly hosted interactive service. The application runs
+locally, and a real Azure call has not yet been verified.
 
-If the earlier OAuth redirect problem recurs, stop that login flow and use GitHub's supported sign-in
-instructions. Never share a token or device code in a chat or commit.
+The separate deterministic benchmark includes 450 published runs / 72,000 tasks
+across five policies, three failure conditions, three dependency-disclosure
+levels, and ten seeds. Its results include costs and negative controls, not just
+the favorable shared-outage case.
 
-The prepared ZIP is an alternative for sharing before GitHub authentication is
-resolved. It contains source, tests, documentation, pinned requirements, an HTML
-report, all per-run metrics, and representative evidence bundles. It does not
-contain a virtual environment or private signing keys.
-
-## Message to Vedh
-
-Hi Vedh,
-
-I followed the Nanda Town exercise and built a small research-oriented extension:
-**Many Agents, One Point of Failure**.
-
-It tests a case where different, correctly registered agents share the same
-underlying service, so switching agent identities does not necessarily escape a
-failure. The implementation uses Nanda Town's Lab engine, registry, messages,
-coordination plugins, ledger, and replayable evidence bundles rather than a
-separate simulator.
-
-I approached this from my experience with agent evaluation, failure taxonomy,
-and robustness under distribution shifts: the goal was to identify an interaction
-that ordinary agent-level checks miss, then build a repeatable test for it.
-The implementation and data are newly created and synthetic.
-
-I compared five selection policies across shared outages, staggered
-provider-local outages, and a no-outage control, with 0%, 50%, and 100% dependency
-disclosure. The repository includes a 450-run campaign, costs and negative
-controls, tests, and the exact limitations.
-
-Clean-install GitHub CI also passes on Windows and Linux with Python 3.11 and
-3.12, running 104 tests and 30 smoke experiments per configuration.
-
-The most useful next collaboration would be testing how much dependency
-information and coordination an agent actually needs: the current experiment has
-a shared reservation view and truthful, structured dependency/failure metadata.
-I'd value your feedback on whether this is a useful scenario/evaluator
-contribution upstream and which assumption to relax first.
-
-Repository: https://github.com/Shereen20112003/SA_NANDATOWN
+For current source, use GitHub's **Code > Download ZIP** or clone the repository.
+Local credentials and workbench run journals are not published.
 
 ## Five-minute demonstration
 
@@ -90,12 +56,21 @@ Repository: https://github.com/Shereen20112003/SA_NANDATOWN
 7. Explain that verification establishes internally consistent simulated
    evidence, not real-world truth, security, or production readiness.
 
-## Upstream PR approach
+## Upstream contribution
 
-This independent repository is a shareable prototype, **not an upstream PR**.
-After maintainer feedback, propose a bounded contribution containing the
-scenario, coordination plugins, custom roles, evaluator, and tests. Agree on the
-role-registration and extension API before copying files into upstream.
+[PR #318](https://github.com/projnanda/nandatown/pull/318) proposes the full
+opt-in deterministic package: scenario generation, coordination policies,
+custom roles, evaluator, evidence verification, campaign/report tooling,
+documentation, and 108 experiment/integration tests. It does not include the
+live Azure/coco workbench or generated campaign bundles.
+
+Local upstream validation passed those 108 tests and 305 existing upstream
+tests. Three Windows-sensitive upstream failures were reproduced against clean
+upstream HEAD and are documented in the PR. Submission is not maintainer
+acceptance; review and merge remain with the Nanda Town maintainers.
+
+A useful follow-up collaboration would relax the experiment's truthful
+dependency metadata or shared reservation assumptions.
 
 Do not describe this as a deployed NANDA Index integration, an independently
 validated research result, or a newly invented routing primitive.
