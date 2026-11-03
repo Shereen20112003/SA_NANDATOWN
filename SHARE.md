@@ -56,6 +56,9 @@ provider-local outages, and a no-outage control, with 0%, 50%, and 100% dependen
 disclosure. The repository includes a 450-run campaign, costs and negative
 controls, tests, and the exact limitations.
 
+Clean-install GitHub CI also passes on Windows and Linux with Python 3.11 and
+3.12, running 104 tests and 30 smoke experiments per configuration.
+
 The most useful next collaboration would be testing how much dependency
 information and coordination an agent actually needs: the current experiment has
 a shared reservation view and truthful, structured dependency/failure metadata.

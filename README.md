@@ -4,6 +4,10 @@
 
 Project repository: [Shereen20112003/SA_NANDATOWN](https://github.com/Shereen20112003/SA_NANDATOWN).
 
+[Clean-install CI verification](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41619744094):
+104 tests and 30 smoke experiments passed on each Windows/Linux and Python
+3.11/3.12 combination.
+
 Twelve service agents can look like twelve alternatives while nine depend on the
 same backend. This project asks whether dependency-aware selection improves
 completion under shared failures, what it costs, and how the benefit changes when

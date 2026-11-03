@@ -102,8 +102,7 @@ or inaccessible infrastructure.
 
 ## Verification
 
-- **104 extension tests** covered across the full regression run and subsequent
-  focused CLI/report checks.
+- **104 extension tests** passed locally and in every hosted CI matrix job.
 - **143 relevant upstream Lab regression tests** passed.
 - Native `nandatown run` with the plugin and a coordination-layer swap passed.
 - All final runs passed the scoped trace evaluator.
@@ -112,9 +111,15 @@ or inaccessible infrastructure.
 - Wheel execution and bundle verification passed outside the source checkout.
 - The HTML report was checked in a browser at desktop and mobile widths.
 
-Local execution used Windows and Python 3.12. The included GitHub Actions matrix
-targets Windows/Linux and Python 3.11/3.12, but hosted CI has not run until the
-repository is published.
+Local execution used Windows and Python 3.12.
+[Hosted CI](https://github.com/Shereen20112003/SA_NANDATOWN/actions/runs/41619744094)
+also passed on Windows/Linux with Python 3.11/3.12: each of the four jobs ran all
+104 tests and a 30-run smoke campaign from a clean installation.
+
+The first hosted run caught an installation-format issue: pip cannot hash-check
+a Git dependency alongside registry package hashes. The corrected setup keeps
+registry dependencies hash-locked and installs the immutable Git revision through
+the project manifest in the second step. The successful matrix used that setup.
 
 Passing evidence means the observed simulation is internally consistent with
 its declared profile. It is **not** proof of real-world dependency truth,
